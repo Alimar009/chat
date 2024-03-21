@@ -25,7 +25,7 @@
     const chat_message = () => {
         console.log('chat_message: ', input.value);
         if (input.value) {
-            socket.emit('chat_message', input.value);
+            socket.broadcast.emit('chat_message', input.value);
             input.value = '';
         }
     };
