@@ -17,23 +17,38 @@
   <script src="socket.io.min.js"></script>
   <script>
     const socket = new io("ws://localhost:3000");
-
+    let v = '';
     const form = document.getElementById('form');
     const input = document.getElementById('input');
     const messages = document.getElementById('messages');
-
+   
     const chat_message = () => {
-        console.log('chat_message: ', input.value);
+        let msg = {
+        message : input.value,
+        id : v
+        }
+        console.log('chat_message: ', input.value, );
         if (input.value) {
-            socket.broadcast.emit('chat_message', input.value);
+            socket.emit('chat_message', msg);
             input.value = '';
         }
     };
 
     socket.on('chat_message', (msg) => {
+        console.log(msg);
         const item = document.createElement('li');
-        item.textContent = msg;
+        if (v == msg.id){
+            
+        }
+        item.textContent = msg.message;
         messages.appendChild(item);
+    });
+
+    socket.on('id', (msg) => {
+        if (v == ''){ 
+            v = msg;
+            console.log(v);
+        }
     });
 </script>
 </body>
